@@ -33,50 +33,50 @@ int arr[36][36];
 #define FOR_STMT 26
 
 //#define data_type [0]
-#define int_dt 0
-#define decimal 1
-#define id 2
-#define open_brac 3
-#define close_brac 4
-#define dot 5
-#define num 6
-#define create 7
-#define database 8
-#define use 9
-#define table 10
-#define varchar 11
-#define alter 12
-#define add 13
-#define constraint 14
-#define drop 15
-#define primary_key 16
-#define insert 17
-#define into 18
-#define values 19
-#define select 20
-#define all 21
-#define distinct 22
-#define from 23
-#define where 24
-#define and 25
-#define or 26
-#define delete 27
-#define update 28
-#define set 29
-#define if_kw 30
-#define else_kw 31
-#define for_kw 32
-#define while_kw 33
-#define begin 34
-#define end 35
-#define dollar 36
-#define semicolon 37
-#define mul 38
-#define sub 39
-#define div 40
-#define modulo 41
-#define relop 42
-#define addo 43 
+#define int_dt 100
+#define decimal 101
+#define id 102
+#define open_brac 103
+#define close_brac 104
+#define dot 105
+#define num 106
+#define create 107
+#define database 108
+#define use 109
+#define table 110
+#define varchar 111
+#define alter 112
+#define add 113
+#define constraint 114
+#define drop 115
+#define primary_key 116
+#define insert 117
+#define into 118
+#define values 119
+#define select 120
+#define all 121
+#define distinct 122
+#define from 123
+#define where 124
+#define and 125
+#define or 126
+#define delete 127
+#define update 128
+#define set 129
+#define if_kw 130
+#define else_kw 131
+#define for_kw 132
+#define while_kw 133
+#define begin 134
+#define end 135
+#define dollar 136
+#define semicolon 137
+#define mul 138
+#define sub 139
+#define div 140
+#define modulo 141
+#define relop 142
+#define addo 143 
 
 char stack[50][10];
 int index1 = -1;
@@ -121,35 +121,35 @@ main()
 	
 	(*farr[0])();
 	
-	 START begin = 1;
-	 START dollar = 0;
-	 STMTLIST create = 2;
-	 STMTLIST update = 2;
-	 STMTLIST use = 2;
-	 STMTLIST alter = 2;
-	 STMTLIST insert = 2;
-	 STMTLIST select = 2;
-	 STMTLIST delete = 2;
-	 STMTLIST drop = 2;
-	 STMTLIST update = 2;
-	 STMTLIST if_kw = 2;
-	 STMTLIST for_kw = 2;
-	 STMTLIST while_kw = 2;
+	 [START] [begin] = 1;
+	 [START] [dollar] = 0;
+	 [STMTLIST] [create] = 2;
+	 [STMTLIST] [update] = 2;
+	 [STMTLIST] [use] = 2;
+	 [STMTLIST] [alter] = 2;
+	 [STMTLIST] [insert] = 2;
+	 [STMTLIST] [select] = 2;
+	 [STMTLIST] [delete] = 2;
+	 [STMTLIST] [drop] = 2;
+	 [STMTLIST] [update] = 2;
+	 [STMTLIST] [if_kw] = 2;
+	 [STMTLIST] [for_kw] = 2;
+	 [STMTLIST] [while_kw] = 2;
 	 //STMTLIST dollar = 2;
-	 STMTLIST end = 4;
+	 [STMTLIST] [end] = 4;
 
-	 STMT create = 3;
-	 STMT update = 3;
-	 STMT use = 3;
-	 STMT alter = 3;
-	 STMT insert = 3;
-	 STMT select = 3;
-	 STMT delete = 3;
-	 STMT drop = 3;
-	 STMT update = 3;
-	 STMT if_kw = 3;
-	 STMT for_kw = 3;
-	 STMT while_kw = 3;
+	 [STMT] [create] = 3;
+	 [STMT] [update] = 3;
+	 [STMT] [use] = 3;
+	 [STMT] [alter] = 3;
+	 [STMT] [insert] = 3;
+	 [STMT] [select] = 3;
+	 [STMT] [delete] = 3;
+	 [STMT] [drop] = 3;
+	 [STMT] [update] = 3;
+	 [STMT] [if_kw] = 3;
+	 [STMT] [for_kw] = 3;
+	 [STMT] [while_kw] = 3;
 	 //STMT dollar = 4;
 	 
 	 CREATE_DB create = 5;
