@@ -4,36 +4,36 @@
 
 int arr[36][36];
 
-#define START arr[0]
-#define STMTLIST arr[1]
-#define STMT arr[2]
-#define CREATE_DB arr[3]
-#define USE_STMT arr[4]
-#define CREATE_STMT arr[5]
-#define COLUMN arr[6]
-#define TYPE arr[7]
-#define COL_NAME arr[8]
-#define ALTER_STMT arr[9]
-#define CONSTRAINT arr[10]
-#define COL arr[11]
-#define INSERT_STMT arr[12]
-#define VALS arr[13]
-#define SELECT_STMT arr[14]
-#define SEARCH_CND arr[15]
-#define DELETE_STMT arr[16]
-#define DROP_TABLE arr[17]
-#define UPDATE_STMT arr[18]
-#define SET_STMT arr[19]
-#define EXPN arr[20]
-#define EXPN_STMT arr[21]
-#define IF_STMT arr[22]
-#define VAR_DECL arr[23]
-#define VAR_LIST arr[24]
-#define WHILE_STMT arr[25]
-#define FOR_STMT arr[26]
+#define START 0
+#define STMTLIST 1
+#define STMT 2
+#define CREATE_DB 3
+#define USE_STMT 4
+#define CREATE_STMT 5
+#define COLUMN 6
+#define TYPE 7
+#define COL_NAME 8
+#define ALTER_STMT 9
+#define CONSTRAINT 10
+#define COL 11
+#define INSERT_STMT 12
+#define VALS 13
+#define SELECT_STMT 14
+#define SEARCH_CND 15
+#define DELETE_STMT 16
+#define DROP_TABLE 17
+#define UPDATE_STMT 18
+#define SET_STMT 19
+#define EXPN 20
+#define EXPN_STMT 21
+#define IF_STMT 22
+#define VAR_DECL 23
+#define VAR_LIST 24
+#define WHILE_STMT 25
+#define FOR_STMT 26
 
 //#define data_type [0]
-/*#define int_dt [0]
+#define int_dt [0]
 #define decimal [1]
 #define id [2]
 #define open_brac [3]
@@ -76,7 +76,7 @@ int arr[36][36];
 #define div [40]
 #define modulo [41]
 #define relop [42]
-#define addo [43] */
+#define addo [43] 
 
 char stack[50][10];
 int index1 = -1;
