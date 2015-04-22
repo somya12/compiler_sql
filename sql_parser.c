@@ -3,7 +3,10 @@
 #include<string.h>
 
 int arr[36][36];
-
+int d;
+FILE *fp;
+int line_number;
+char string[20],string4[20],string2[20],string3[20];
 #define START 0
 #define STMTLIST 1
 #define STMT 2
@@ -78,39 +81,236 @@ int arr[36][36];
 #define relop 142
 #define addo 143 
 
-char stack[50][10];
+struct node
+	{
+	int ind;
+	char value[15];
+	};
+
+struct node stack[20];
 int index1 = -1;
 
-void ( *farr[20]) (void);
-
-void func1()
-{
-  push("1");
-  push("end"); 
-}
-
-
-char * pop()
-{
-	char string[10] ;
-	strcpy(string,stack[index1]);
-	index1--;
-	return string;
+void func(int i)
+	{
+	struct node *temp1=malloc(sizeof(struct node));
+	switch(i)
+		{
+		case 1:
+			{
+			pop();
+			printf("in switch case\n");
+			
+			strcmp(temp1->value,"end");
+			temp1->ind = end;
+			push(temp1);
+			
+			strcmp(temp1->value,"STMTLIST");
+			temp1->ind = STMTLIST; 
+			push(temp1);
+			
+			break;
+			}
+		/*case 2:
+			{
+			printf("in stmt list\n");
+			//fscanf(fp,"%d %s %s",&line_number,string,string2);
+			pop();
+			strcmp(temp1->value,"STMTLIST");
+			temp1->ind = STMTLIST;
+			push(temp1);
+			strcmp(temp1->value,"STMT");
+			temp1->ind = STMT;
+			d = pop();
+			if(!strcmp(string,"create"))
+			{
+			go_to = arr[d][7];
+			func(go_to);
+			}
+		
+		else if(!strcmp(string,"use"))
+			{
+			go_to = arr[d][9];
+			func(go_to);
+			}
+		
+		else if(!strcmp(string,"alter"))
+			{
+			go_to = arr[d][12];
+			func(go_to);
+			}
+		
+		else if(!strcmp(string,"drop"))
+			{
+			go_to = arr[d][15];
+			func(go_to);
+			}
+		
+		else if(!strcmp(string,"insert"))
+			{
+			go_to = arr[d][17];
+			func(go_to);
+			}
+		
+		else if(!strcmp(string,"select"))
+			{
+			go_to = arr[d][20];
+			func(go_to);
+			}
+		
+		else if(!strcmp(string,"where"))
+			{
+			go_to = arr[d][24];
+			func(go_to);
+			}
+		
+		else if(!strcmp(string,"delete"))
+			{
+			go_to = arr[d][27];
+			func(go_to);
+			}
+		else if(!strcmp(string,"update"))
+			{
+			go_to = arr[d][28];
+			func(go_to);
+			}
+		else if(!strcmp(string,"set"))
+			{
+			go_to = arr[d][29];
+			func(go_to);
+			}
+		else if(!strcmp(string,"create"))
+			{
+			go_to = arr[d][7];
+			func(go_to);
+			}
+			break;
+			//struct node *temp1
+			}*/
+		case 5:
+			{
+			// for create
+			if(d == 1)
+				{
+				strcmp(temp1->value,"STMTLIST");
+				temp1->ind = STMTLIST;
+				push(temp1);
+				}
+			fscanf(fp,"%d %s %s",line_number,string3,string4);
+			if(!strcmp(string3,"table"))
+				{
+				//printf("create\t);
+				//printf("database\t");
+				strcmp(temp1->value,"id");
+				temp1->ind = id;
+				push(temp1);
+				strcmp(temp1->value,"(");
+				temp1->ind = open_brac;
+				push(temp1);
+				temp1->ind = COLUMN;
+				strcmp(temp1->value,"COLUMN");
+				push(temp1);
+				}
+			else if(!strcmp(string3,"database"))
+				{
+				//printf("create\t");
+				//printf("database\t");
+				strcmp(temp1->value,id);
+				temp1->ind = id;
+				push(temp1);
+				}
+			break;
+			}
+		case 6:
+			{
+			strcmp(temp1->value,"id");
+			temp1->ind = id;
+			push(temp1);
+			}
+		case 8:
+			/* not done completely */
+			{
+			int len = strlen(string);
+			int i;
+			for(i=0;i<len;i++)	
+				{
+				char c = string[i];
+				if((c>='a' && c<='z')||c=='_')
+					{
+					}
+				else
+					{
+					printf("invalid id token, should only contain values from a to z or _\n");
+					}
+				}
+			fscanf(fp,"%s %s %s",line_number,string3,string4);
+			if(!(strcmp(string3,"int") || strcmp(string3,"decimal") || strcmp(string3,"varchar")))
+				{
+				if(!(strcmp(string3,"varchar")))
+					{
+					fscanf(fp,"%s %s %s",line_number,string3,string4);
+					if(!(strcmp(string3,"("))
+						{
+						fscanf(fp,"%s %s %s",line_number,string3,string4);
+						len = strlen(string3)
+						for(i=0;i<len;i++)
+							{
+							char c = string[i];
+							if(c>='0' && c<='9')
+								{
+								}
+							else
+								{
+								printf("wrong declaration of varchar\n");
+								}
+							}
+						fscanf(fp,"%s %s %s",line_number,string3,string4);
+						if((strcmp(string3,")"))
+							{
+							printf("wrong declaration of varchar\n");
+							}	
+					
+						}
+					}
+				}
+			else
+				{
+				printf("data type needed\n");
+				}
+			break;
+			}
+		case 11:	
+			{
+			break;
+			}
+		}
 	}
 
-void push(char* arr)
+
+int pop()
+{
+	struct node temp;
+	strcpy(temp.value,stack[index1].value);
+	temp.ind = stack[index1].ind;
+	index1--;
+	return temp.ind;
+	}
+
+void push(struct node *arr)
 	{
 	index1++;
-	strcpy(stack[index1],arr);
+	strcpy(stack[index1].value,arr->value);
+	stack[index1].ind = arr->ind;
+	//free(arr);
 	}
+
 
 main()
 	{
-	FILE *fp = fopen("symbol_table","r");
-	char string[25];
-	char tab[1];
-	char string2[30];
-	int line_number;
+	fp = fopen("symbol_table","r");
+	//char string[25];
+	//char tab[1];
+	//char string2[30];
+	//int line_number;
 
 	//farr[0] = func1;
 
@@ -119,114 +319,117 @@ main()
 	char str2[7] = "func";
 	char str[2];
 	
-	(*farr[0])();
+	//(*farr[0])();
 	
-	 [START] [begin] = 1;
-	 [START] [dollar] = 0;
-	 [STMTLIST] [create] = 2;
-	 [STMTLIST] [update] = 2;
-	 [STMTLIST] [use] = 2;
-	 [STMTLIST] [alter] = 2;
-	 [STMTLIST] [insert] = 2;
-	 [STMTLIST] [select] = 2;
-	 [STMTLIST] [delete] = 2;
-	 [STMTLIST] [drop] = 2;
-	 [STMTLIST] [update] = 2;
-	 [STMTLIST] [if_kw] = 2;
-	 [STMTLIST] [for_kw] = 2;
-	 [STMTLIST] [while_kw] = 2;
+	 arr[START] [begin-100] = 1;
+	 arr[START] [dollar-100] = 0;
+	 arr[STMTLIST] [create-100] = 5;
+	 arr[STMTLIST] [update-100] = 19;
+	 arr[STMTLIST] [use-100] = 6;
+	 arr[STMTLIST] [alter-100] = 11;
+	 arr[STMTLIST] [insert-100] = 14;
+	 arr[STMTLIST] [select-100] = 15;
+	 arr[STMTLIST] [delete-100] = 17;
+	 arr[STMTLIST] [drop-100] = 18;
+	 arr[STMTLIST] [update-100] = 19;
+	 arr[STMTLIST] [if_kw-100] = 2;
+	 arr[STMTLIST] [for_kw-100] = 2;
+	 arr[STMTLIST] [while_kw-100] = 2;
 	 //STMTLIST dollar = 2;
-	 [STMTLIST] [end] = 4;
+	 arr[STMTLIST] [end-100] = 4;
 
-	 [STMT] [create] = 3;
-	 [STMT] [update] = 3;
-	 [STMT] [use] = 3;
-	 [STMT] [alter] = 3;
-	 [STMT] [insert] = 3;
-	 [STMT] [select] = 3;
-	 [STMT] [delete] = 3;
-	 [STMT] [drop] = 3;
-	 [STMT] [update] = 3;
-	 [STMT] [if_kw] = 3;
-	 [STMT] [for_kw] = 3;
-	 [STMT] [while_kw] = 3;
+	 arr[STMT] [create-100] = 5;
+	 arr[STMT] [update-100] = 19;
+	 arr[STMT] [use-100] = 6;
+	 arr[STMT] [alter-100] = 11;
+	 arr[STMT] [insert-100] = 14;
+	 arr[STMT] [select-100] = 15;
+	 arr[STMT] [delete-100] = 17;
+	 arr[STMT] [drop-100] = 18;
+	 arr[STMT] [update-100] = 19;
+	 arr[STMT] [if_kw-100] = 3;
+	 arr[STMT] [for_kw-100] = 3;
+	 arr[STMT] [while_kw-100] = 3;
 	 //STMT dollar = 4;
 	 
-	 CREATE_DB create = 5;
-	 CREATE_DB database = 0;
-	 CREATE_DB id = 0;
+	 arr[CREATE_DB] [create-100] = 5;
+	 arr[CREATE_DB] [database-100] = 0;
+	 arr[CREATE_DB] [id-100] = 0;
 	
 	
-	 USE_STMT use = 6;
-	 USE_STMT id = 0;
+	 arr[USE_STMT] [use-100] = 6;
+	 arr[USE_STMT] [id-100] = 0;
 	
-	 CREATE_STMT create = 7;
-	 CREATE_STMT table = 0;
-	 CREATE_STMT open_brac = 0;
-	 CREATE_STMT close_brac = 0;
+	// arr[CREATE_STMT] [create-100] = 7;
+	 arr[CREATE_STMT] [table-100] = 0;
+	 arr[CREATE_STMT] [open_brac-100] = 0;
+	 arr[CREATE_STMT] [close_brac-100] = 0;
 	
-	 COLUMN id = 8;
-	 COLUMN close_brac = 9;
+	 arr[COLUMN] [id-100] = 8;
+	 arr[COLUMN] [close_brac-100] = 9;
 	
-	 COL_NAME id = 10;
-	 COL_NAME int_dt = 0;
-	 COL_NAME decimal = 0;
-	 COL_NAME id = 0;
+	 arr[COL_NAME] [id-100] = 10;
+	 arr[COL_NAME] [int_dt-100] = 0;
+	 arr[COL_NAME] [decimal-100] = 0;
+	 arr[COL_NAME] [id-100] = 0;
  
 	 /* datatype taken lite */
 
-  	ALTER_STMT alter = 11;
-	ALTER_STMT table = 0;
-	ALTER_STMT id = 0;
-	ALTER_STMT add = 0;
+  	arr[ALTER_STMT] [alter-100] = 11;
+	arr[ALTER_STMT] [table-100] = 0;
+	arr[ALTER_STMT] [id-100] = 0;
+	arr[ALTER_STMT] [add-100] = 0;
 
-	CONSTRAINT constraint = 12;
-	CONSTRAINT  primary_key = 0;
-	CONSTRAINT id = 0;
+	arr[CONSTRAINT] [constraint-100] = 12;
+	arr[CONSTRAINT] [primary_key-100] = 0;
+	arr[CONSTRAINT] [id-100] = 0;
  	
-	COL id = 13;
-	COL semicolon = 0;
+	arr[COL] [id-100] = 13;
+	arr[COL] [semicolon-100] = 0;
 
-	INSERT_STMT insert = 14;
-	INSERT_STMT into = 0;
-	INSERT_STMT id = 0;
-	INSERT_STMT values = 0;
-	INSERT_STMT open_brac = 0;
-	INSERT_STMT semicolon = 0;
+	arr[INSERT_STMT] [insert-100] = 14;
+	arr[INSERT_STMT] [into-100] = 0;
+	arr[INSERT_STMT] [id-100] = 0;
+	arr[INSERT_STMT] [values-100] = 0;
+	arr[INSERT_STMT] [open_brac-100] = 0;
+	arr[INSERT_STMT] [semicolon-100] = 0;
 	
-	VALS id = 0;
-	VALS num = 0;
+	arr[VALS] [id-100] = 0;
+	arr[VALS] [num-100] = 0;
  /* num me we check if it is number or decimal */
-	VALS close_brac = 0;
+	arr[VALS] [close_brac-100] = 0;
 
-	SELECT_STMT select = 15;
-	SELECT_STMT mul = 0;
-	SELECT_STMT from = 0;
-	SELECT_STMT id = 0;
+	arr[SELECT_STMT] [select-100] = 15;
+	arr[SELECT_STMT] [mul-100] = 0;
+	arr[SELECT_STMT] [from-100] = 0;
+	arr[SELECT_STMT] [id-100] = 0;
 /* in select funstion we'll do a look ahead */
 	//printf("%s",string);
-	SEARCH_CND id = 16;
-	SEARCH_CND relop = 0;
-	SEARCH_CND semicolon = 0;
+	arr[SEARCH_CND] [id-100] = 16;
+	arr[SEARCH_CND] [relop-100] = 0;
+	arr[SEARCH_CND] [semicolon-100] = 0;
 
- 	DELETE_STMT delete = 17;
-	DELETE_STMT from  = 0;
-	DELETE_STMT id = 0;
-	DELETE_STMT where = 0;
+ 	arr[DELETE_STMT] [delete-100] = 17;
+	arr[DELETE_STMT] [from-100]  = 0;
+	arr[DELETE_STMT] [id-100] = 0;
+	arr[DELETE_STMT] [where-100] = 0;
 	
-	DROP_TABLE drop = 18;
-	DROP_TABLE id = 0;
+	arr[DROP_TABLE] [drop-100] = 18;
+	arr[DROP_TABLE] [id-100] = 0;
 
-	UPDATE_STMT update = 19;
-	UPDATE_STMT id = 0;
-	UPDATE_STMT where = 0;
+	arr[UPDATE_STMT] [update-100] = 19;
+	arr[UPDATE_STMT] [id-100] = 0;
+	arr[UPDATE_STMT] [where-100] = 0;
 	
-	SET_STMT set = 20;
-	SET_STMT where = 0;
+	arr[SET_STMT] [set-100] = 20;
+	arr[SET_STMT] [where-100] = 0;
 
 	/*EXPN*/
-	push(0);
-
+	struct node *first;
+	first->ind = 0;
+	strcmp(first->value,"START");
+	push(first);
+	
 	fscanf(fp,"%s %s %s %s",string,string,string,string);
 	fscanf(fp,"%s %s",string,string);
 	//printf("%s",string);
@@ -235,17 +438,232 @@ main()
 		fscanf(fp,"%d %s %s",&line_number,string,string2);
 		printf("%d %s %s\n",line_number,string,string2);
 
-		int d = atoi(pop());
+		d = pop();
 		int go_to;
 		// = arr[d] string;
-		if(strcmp(string,"begin")
+		if(!strcmp(string,"begin"))
 			{
-			go_to = array[d][0];
-			
+			//printf("went here\n");
+			go_to = arr[d][134-100];
+			func(go_to);
 			}
-
+		else if(!strcmp(string,"int"))
+			{
+			go_to = arr[d][0];
+			func(go_to);
+			}
+		else if(!strcmp(string,"decimal"))
+			{
+			go_to = arr[d][1];
+			func(go_to);
+			}
+		else if(!strcmp(string2,"variable_name"))
+			{
+			go_to = arr[d][2];
+			func(go_to);
+			}
+		else if(!strcmp(string,"("))
+			{
+			go_to = arr[d][3];
+			func(go_to);
+			}
+		else if(!strcmp(string,")"))
+			{
+			go_to = arr[d][4];
+			func(go_to);
+			}
+		else if(!strcmp(string,"."))
+			{
+			go_to = arr[d][5];
+			func(go_to);
+			}
+	else if(!strcmp(string2,"num"))
+			{
+			go_to = arr[d][6];
+			func(go_to);
+			}
+		else if(!strcmp(string,"create"))
+			{
+			go_to = arr[d][7];
+			func(go_to);
+			}
+		else if(!strcmp(string,"database"))
+			{
+			go_to = arr[d][8];
+			func(go_to);
+			}
+		else if(!strcmp(string,"use"))
+			{
+			go_to = arr[d][9];
+			func(go_to);
+			}
+		else if(!strcmp(string,"table"))
+			{
+			go_to = arr[d][10];
+			func(go_to);
+			}
+		else if(!strcmp(string,"varchar"))
+			{
+			go_to = arr[d][11];
+			func(go_to);
+			}
+		else if(!strcmp(string,"alter"))
+			{
+			go_to = arr[d][12];
+			func(go_to);
+			}
+		else if(!strcmp(string,"add"))
+			{
+			go_to = arr[d][13];
+			func(go_to);
+			}
+		else if(!strcmp(string,"constraint"))
+			{
+			go_to = arr[d][14];
+			func(go_to);
+			}
+		else if(!strcmp(string,"drop"))
+			{
+			go_to = arr[d][15];
+			func(go_to);
+			}
+		else if(!strcmp(string,"primary"))
+			{
+			go_to = arr[d][16];
+			func(go_to);
+			}
+		else if(!strcmp(string,"insert"))
+			{
+			go_to = arr[d][17];
+			func(go_to);
+			}
+		else if(!strcmp(string,"into"))
+			{
+			go_to = arr[d][18];
+			func(go_to);
+			}
+		else if(!strcmp(string,"values"))
+			{
+			go_to = arr[d][19];
+			func(go_to);
+			}
+		else if(!strcmp(string,"select"))
+			{
+			go_to = arr[d][20];
+			func(go_to);
+			}
+		else if(!strcmp(string,"all"))
+			{
+			go_to = arr[d][21];
+			func(go_to);
+			}
+		else if(!strcmp(string,"distinct"))
+			{
+			go_to = arr[d][22];
+			func(go_to);
+			}
+		else if(!strcmp(string,"from"))
+			{
+			go_to = arr[d][23];
+			func(go_to);
+			}
+		else if(!strcmp(string,"where"))
+			{
+			go_to = arr[d][24];
+			func(go_to);
+			}
+		else if(!strcmp(string,"and"))
+			{
+			go_to = arr[d][25];
+			func(go_to);
+			}
+		else if(!strcmp(string,"or"))
+			{
+			go_to = arr[d][26];
+			func(go_to);
+			}
+		else if(!strcmp(string,"delete"))
+			{
+			go_to = arr[d][27];
+			func(go_to);
+			}
+		else if(!strcmp(string,"update"))
+			{
+			go_to = arr[d][28];
+			func(go_to);
+			}
+		else if(!strcmp(string,"set"))
+			{
+			go_to = arr[d][29];
+			func(go_to);
+			}
+		else if(!strcmp(string,"if"))
+			{
+			go_to = arr[d][30];
+			func(go_to);
+			}
+		else if(!strcmp(string,"else"))
+			{
+			go_to = arr[d][31];
+			func(go_to);
+			}
+		else if(!strcmp(string,"for"))
+			{
+			go_to = arr[d][32];
+			func(go_to);
+			}
+		else if(!strcmp(string,"while"))
+			{
+			go_to = arr[d][33];
+			func(go_to);
+			}
+		else if(!strcmp(string,"end"))
+			{
+			go_to = arr[d][35];
+			func(go_to);
+			}
+		else if(!strcmp(string,";"))
+			{
+			go_to = arr[d][37];
+			func(go_to);
+			}
+		else if(!strcmp(string,"*"))
+			{
+			go_to = arr[d][38];
+			func(go_to);
+			}
+		else if(!strcmp(string,"-"))
+			{
+			go_to = arr[d][39];
+			func(go_to);
+			}
+		else if(!strcmp(string,"/"))
+			{
+			go_to = arr[d][40];
+			func(go_to);
+			}
+		else if(!strcmp(string,"%"))
+			{
+			go_to = arr[d][41];
+			func(go_to);
+			}
+		else if(!strcmp(string,"<=")||!strcmp(string,"==")||!strcmp(string,">=")||!strcmp(string,"!=")||!strcmp(string,"<")||!strcmp(string,">"))
+			{
+			go_to = arr[d][42];
+			func(go_to);
+			}
+		else if(!strcmp(string,"+"))
+			{
+			go_to = arr[d][43];
+			func(go_to);
+			}
+		else if(!strcmp(string2,"invalid"))
+			{
+			printf("invalid symbol found in the symbol table\n");
+			}
 		if(go_to != -1 || go_to != 0)
-		(*farr[go_to])();
+			printf("gher\n");
+		//(*farr[go_to])();
 		else
 			if(go_to == -1)
 				{
@@ -255,7 +673,8 @@ main()
 				{
 				printf("missing token in line number %d\n",line_number);
 				}
-		//parse(string, string2);	
+		//parse(string, string2);
+		printf("goimg for next loop\n");	
 		}
 	}
 
